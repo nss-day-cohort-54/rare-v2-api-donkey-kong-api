@@ -1,0 +1,10 @@
+[
+  {
+    "model": "rareapi.reaction",
+    "pk": 1,
+    "fields": {
+      "label": "Label of reaction",
+      "image_url": "image@url.com"
+    }
+  }
+]

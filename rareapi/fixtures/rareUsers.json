@@ -1,0 +1,24 @@
+[
+  {
+    "model": "rareapi.rareUser",
+    "pk": 1,
+    "fields": {
+      "bio": "I love games.",
+      "profile_image_url": "https://picsum.photos/200",
+      "created_on": "2022-05-13",
+      "active": true,
+      "user": 1
+    }
+  },
+  {
+    "model": "rareapi.rareUser",
+    "pk": 2,
+    "fields": {
+      "bio": "I am in charge.",
+      "profile_image_url": "https://picsum.photos/200",
+      "created_on": "2022-09-13",
+      "active": true,
+      "user": 2
+    }
+  }
+]
