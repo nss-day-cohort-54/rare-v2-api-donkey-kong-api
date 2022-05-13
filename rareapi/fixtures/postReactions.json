@@ -1,0 +1,11 @@
+[
+  {
+    "model": "rareapi.postReaction",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "post": 1,
+      "reaction": 1
+    }
+  }
+]

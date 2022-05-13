@@ -1,0 +1,13 @@
+[
+  {
+    "model": "rareapi.rareUser",
+    "pk": 1,
+    "fields": {
+      "bio": "I love games.",
+      "profile_image_url": "image@url.com",
+      "created_on": "2022-05-13",
+      "active": true,
+      "user": 1
+    }
+  }
+]

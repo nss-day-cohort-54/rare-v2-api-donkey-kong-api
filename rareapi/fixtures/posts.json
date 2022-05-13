@@ -1,0 +1,15 @@
+[
+  {
+    "model": "rareapi.post",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "category": 1,
+      "title": "This is a title",
+      "publication_date": "2022-01-09",
+      "image_url": "image@url.com",
+      "content": "This is the content section of the post.",
+      "approved": true
+    }
+  }
+]

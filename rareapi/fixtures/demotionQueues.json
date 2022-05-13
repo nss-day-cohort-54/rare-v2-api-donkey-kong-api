@@ -1,0 +1,11 @@
+[
+  {
+    "model": "rareapi.demotionQueue",
+    "pk": 1,
+    "fields": {
+      "action": "demotion words",
+      "admin": 1,
+      "approver_one": 1
+    }
+  }
+]
