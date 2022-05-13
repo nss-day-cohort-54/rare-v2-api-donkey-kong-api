@@ -3,11 +3,11 @@
     "model": "rareapi.post",
     "pk": 1,
     "fields": {
-      "user": 1,
+      "rare_user": 1,
       "category": 1,
       "title": "This is a title",
       "publication_date": "2022-01-09",
-      "image_url": "image@url.com",
+      "image_url": "https://picsum.photos/200",
       "content": "This is the content section of the post.",
       "approved": true
     }
