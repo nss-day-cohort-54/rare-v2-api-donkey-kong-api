@@ -3,6 +3,7 @@ from django.http import HttpResponseServerError
 from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
+from rareapi.models import rareUser
 from rareapi.models.post import Post
 
 from rareapi.models.post import Post
@@ -23,10 +24,10 @@ class PostView(ViewSet):
     def list(self, request):
 
         posts = Post.objects.all()
-        user = RareUser.objects.get(user=request.auth.user)
+        rare_user = RareUser.objects.get(user=request.auth.user)
         category = request.query_params.get('label', None)
         if category is not None:
-            posts = posts.filter(category=category).filter(user=user)
+            posts = posts.filter(category=category).filter(user=rare_user)
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
@@ -42,7 +43,7 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = (
             'id',
-            'user',
+            'rare_user',
             'category',
             'title',
             'publication_date',
