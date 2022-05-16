@@ -111,11 +111,14 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = (
             'id',
+            'rare_user',
+            'category',
             'title',
             'publication_date',
             'image_url',
             'content',
-            'approved'
+            'approved',
+            'tags'
         )
         depth = 2
 
@@ -133,7 +136,7 @@ class CreatePostSerializer(serializers.ModelSerializer):
             'content',
             'approved',
             'category',
-            'rare_user'
+            'rare_user',
             'tags'
         )
         depth = 2
