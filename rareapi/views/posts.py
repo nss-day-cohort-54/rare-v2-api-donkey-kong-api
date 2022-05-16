@@ -3,17 +3,28 @@ from django.http import HttpResponseServerError
 from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
-from rareapi.models import rareUser
-from rareapi.models.post import Post
-
+from rareapi.models.category import Category
 from rareapi.models.post import Post
 from rareapi.models.rareUser import RareUser
 
 
 class PostView(ViewSet):
+    """_summary_
+
+    Args:
+        ViewSet (_type_): _description_
+    """
 
     def retrieve(self, request, pk):
+        """_summary_
 
+        Args:
+            request (_type_): _description_
+            pk (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         try:
             post = Post.objects.get(pk=pk)
             serializer = PostSerializer(post)
@@ -22,7 +33,14 @@ class PostView(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
     def list(self, request):
+        """_summary_
 
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         posts = Post.objects.all()
         rare_user = RareUser.objects.get(user=request.auth.user)
         category = request.query_params.get('label', None)
@@ -30,6 +48,56 @@ class PostView(ViewSet):
             posts = posts.filter(category=category).filter(user=rare_user)
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
+
+    def update(self, request, pk):
+        """_summary_
+
+        Args:
+            request (_type_): _description_
+            pk (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        post = Post.objects.get(pk=pk)
+        serializer = CreatePostSerializer(post, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        # post.categories.remove(*post.categories.all())
+        # post.categories.add(*request.data['categories'])
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+    def create(self, request):
+        """Handle POST operations Returns:
+            Response -- JSON serialized game instance
+        """
+        # Any foreign keys needed must be stored in a variable
+        # like this
+
+        rare_user = RareUser.objects.get(user=request.auth.user)
+        category = Category.objects.get(pk=request.data['category'])
+        serializer = CreatePostSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(rare_user=rare_user, category=category)
+        # post = Post.objects.get(pk=serializer.data['id'])
+        # post.categories.add(*request.data['category'])
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def destroy(self, request, pk):
+        """_summary_
+
+        Args:
+            request (_type_): _description_
+            pk (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        post = Post.objects.get(pk=pk)
+        post.delete()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -43,12 +111,30 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = (
             'id',
-            'rare_user',
-            'category',
             'title',
             'publication_date',
             'image_url',
             'content',
-            'approved'
+            'approved',
+            'rare_user',
+            'category'
+        )
+        depth = 2
+
+
+class CreatePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        # uses an array because information is coming from
+        # front-end
+        fields = (
+            'id',
+            'title',
+            'publication_date',
+            'image_url',
+            'content',
+            'approved',
+            'category',
+            'rare_user'
         )
         depth = 2
