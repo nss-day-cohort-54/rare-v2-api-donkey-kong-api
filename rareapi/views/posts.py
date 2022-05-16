@@ -115,9 +115,7 @@ class PostSerializer(serializers.ModelSerializer):
             'publication_date',
             'image_url',
             'content',
-            'approved',
-            'rare_user',
-            'category'
+            'approved'
         )
         depth = 2
 
@@ -136,5 +134,6 @@ class CreatePostSerializer(serializers.ModelSerializer):
             'approved',
             'category',
             'rare_user'
+            'tags'
         )
         depth = 2
