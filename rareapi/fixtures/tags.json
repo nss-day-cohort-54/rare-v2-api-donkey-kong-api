@@ -5,5 +5,26 @@
     "fields": {
       "label": "This is the label of a tag"
     }
+  },
+  {
+    "model": "rareapi.tag",
+    "pk": 2,
+    "fields": {
+      "label": "This is the second tag"
+    }
+  },
+  {
+    "model": "rareapi.tag",
+    "pk": 3,
+    "fields": {
+      "label": "Apples"
+    }
+  },
+  {
+    "model": "rareapi.tag",
+    "pk": 4,
+    "fields": {
+      "label": "Venus"
+    }
   }
 ]
