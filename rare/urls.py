@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import path
 from rareapi.views.auth import login_user, register_user
 from rareapi.views.posts import PostView
+from rareapi.views.tags import TagView
 from rest_framework import routers
 
 router = routers.DefaultRouter(trailing_slash=False)
 
 router.register(r'posts', PostView, 'post')
+router.register(r'tags', TagView, 'tag')
 
 urlpatterns = [
     path('register', register_user),
