@@ -9,7 +9,8 @@
       "publication_date": "2022-01-09",
       "image_url": "https://picsum.photos/200",
       "content": "This is the content section of the post.",
-      "approved": true
+      "approved": true,
+      "tags": [1]
     }
   }
 ]

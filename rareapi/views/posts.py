@@ -49,6 +49,7 @@ class PostSerializer(serializers.ModelSerializer):
             'publication_date',
             'image_url',
             'content',
-            'approved'
+            'approved',
+            'tags'
         )
         depth = 2
