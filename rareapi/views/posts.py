@@ -35,9 +35,7 @@ class PostView(ViewSet):
             posts = Post.objects.all()
         else:
             posts = Post.objects.all().filter(approved=1)
-            publication_date = Post.objects.get(
-                publication_date=request.data['publication_date'])
-            posts = posts.filter(publication_date <= datetime.now())
+            posts = posts.filter(publication_date__lt=datetime.now())
         posts = posts.order_by('-publication_date')
         category = request.query_params.get('label', None)
         if category is not None:
