@@ -44,7 +44,7 @@ class RareUserSerializer(serializers.ModelSerializer):
         depth = 2
 
 
-class CreateGameSerializer(serializers.ModelSerializer):
+class CreateRareUser(serializers.ModelSerializer):
     class Meta:
         model = RareUser
         # uses an array because information is coming from

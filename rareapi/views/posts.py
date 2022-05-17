@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseServerError
 from rest_framework import serializers, status
@@ -6,6 +8,7 @@ from rest_framework.viewsets import ViewSet
 from rareapi.models.category import Category
 from rareapi.models.post import Post
 from rareapi.models.rareUser import RareUser
+from rareapi.views.rare_user import RareUserSerializer
 
 
 class PostView(ViewSet):
@@ -16,15 +19,7 @@ class PostView(ViewSet):
     """
 
     def retrieve(self, request, pk):
-        """_summary_
-
-        Args:
-            request (_type_): _description_
-            pk (_type_): _description_
-
-        Returns:
-            _type_: _description_
-        """
+        """_summary_"""
         try:
             post = Post.objects.get(pk=pk)
             serializer = PostSerializer(post)
@@ -33,32 +28,25 @@ class PostView(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
     def list(self, request):
-        """_summary_
-
-        Args:
-            request (_type_): _description_
-
-        Returns:
-            _type_: _description_
-        """
-        posts = Post.objects.all()
+        """_summary_"""
         rare_user = RareUser.objects.get(user=request.auth.user)
+        serialized_user = RareUserSerializer(rare_user)
+        if serialized_user.data["user"]["is_staff"]:
+            posts = Post.objects.all()
+        else:
+            posts = Post.objects.all().filter(approved=1)
+            publication_date = Post.objects.get(
+                publication_date=request.data['publication_date'])
+            posts = posts.filter(publication_date <= datetime.now())
+        posts = posts.order_by('-publication_date')
         category = request.query_params.get('label', None)
         if category is not None:
-            posts = posts.filter(category=category).filter(user=rare_user)
+            posts = posts.filter(category=category)
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
     def update(self, request, pk):
-        """_summary_
-
-        Args:
-            request (_type_): _description_
-            pk (_type_): _description_
-
-        Returns:
-            _type_: _description_
-        """
+        """_summary_"""
         post = Post.objects.get(pk=pk)
         serializer = CreatePostSerializer(post, data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -86,15 +74,7 @@ class PostView(ViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def destroy(self, request, pk):
-        """_summary_
-
-        Args:
-            request (_type_): _description_
-            pk (_type_): _description_
-
-        Returns:
-            _type_: _description_
-        """
+        """_summary_"""
         post = Post.objects.get(pk=pk)
         post.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
