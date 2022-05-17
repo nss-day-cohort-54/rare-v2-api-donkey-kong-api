@@ -62,12 +62,12 @@ class PostView(ViewSet):
         # like this
 
         rare_user = RareUser.objects.get(user=request.auth.user)
-        category = Category.objects.get(pk=request.data['category'])
+        category = Category.objects.get(pk=request.data['category_id'])
         serializer = CreatePostSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(rare_user=rare_user, category=category)
-        # post = Post.objects.get(pk=serializer.data['id'])
-        # post.categories.add(*request.data['category'])
+        post = Post.objects.get(pk=serializer.data['id'])
+        post.tags.add(*request.data['tags'])
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -113,8 +113,6 @@ class CreatePostSerializer(serializers.ModelSerializer):
             'image_url',
             'content',
             'approved',
-            'category',
-            'rare_user',
             'tags'
         )
         depth = 2
