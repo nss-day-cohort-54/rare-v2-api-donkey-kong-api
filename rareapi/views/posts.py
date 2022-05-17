@@ -66,8 +66,8 @@ class PostView(ViewSet):
         serializer = CreatePostSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(rare_user=rare_user, category=category)
-        # post = Post.objects.get(pk=serializer.data['id'])
-        # post.categories.add(*request.data['category'])
+        post = Post.objects.get(pk=serializer.data['id'])
+        post.tags.add(*request.data['tags'])
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
