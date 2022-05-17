@@ -16,13 +16,15 @@ Including another URLconf
 from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
+from rest_framework import routers
+
 from rareapi.views.auth import login_user, register_user
+from rareapi.views.categories import CategoryView
 from rareapi.views.comments import CommentView
 from rareapi.views.posts import PostView
 from rareapi.views.tags import TagView
-from rest_framework import routers
 from rareapi.views.rare_user import RareUserView
-from rareapi.views.categories import CategoryView
+
 
 from rareapi.views.users import UserView
 
@@ -33,6 +35,7 @@ router.register(r'users', RareUserView, 'user')
 router.register(r'categories', CategoryView, 'category')
 router.register(r'tags', TagView, 'tag')
 router.register(r'comments', CommentView, 'comment')
+router.register(r'categories', CategoryView, 'category')
 router.register(r'users', UserView, 'user')
 
 urlpatterns = [
