@@ -59,6 +59,16 @@ class TagView(ViewSet):
         tag.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
+    def update(self, request, pk):
+        """_summary_"""
+        tag = Tag.objects.get(pk=pk)
+        serializer = CreateTagSerializer(tag, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        # post.categories.remove(*post.categories.all())
+        # post.categories.add(*request.data['categories'])
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
 
 class TagSerializer(serializers.ModelSerializer):
     """JSON serializer for tags
