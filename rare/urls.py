@@ -22,11 +22,14 @@ from rareapi.views.posts import PostView
 from rareapi.views.tags import TagView
 from rest_framework import routers
 
+from rareapi.views.users import UserView
+
 router = routers.DefaultRouter(trailing_slash=False)
 
 router.register(r'posts', PostView, 'post')
 router.register(r'tags', TagView, 'tag')
 router.register(r'comments', CommentView, 'comment')
+router.register(r'users', UserView, 'user')
 
 urlpatterns = [
     path('register', register_user),
