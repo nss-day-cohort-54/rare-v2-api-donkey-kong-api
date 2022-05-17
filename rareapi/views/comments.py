@@ -38,7 +38,7 @@ class CommentView(ViewSet):
             Response -- JSON serialized comment instance
         """
         author = RareUser.objects.get(user=request.auth.user)
-        post = Post.objects.get(pk = request.data['post'])
+        post = Post.objects.get(pk = request.data['post_id'])
         serializer = CreatecommentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(author=author, post=post)
@@ -58,7 +58,7 @@ class CommentView(ViewSet):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username',)
+        fields = ('id', 'username')
 class RareUserSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
@@ -77,4 +77,4 @@ class CommentSerializer(serializers.ModelSerializer):
 class CreatecommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['id', "content", "post", "author"]
+        fields = ['id', "content"]
