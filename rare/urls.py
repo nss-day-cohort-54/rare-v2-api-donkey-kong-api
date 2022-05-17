@@ -32,7 +32,6 @@ router = routers.DefaultRouter(trailing_slash=False)
 
 router.register(r'posts', PostView, 'post')
 router.register(r'users', RareUserView, 'user')
-router.register(r'categories', CategoryView, 'category')
 router.register(r'tags', TagView, 'tag')
 router.register(r'comments', CommentView, 'comment')
 router.register(r'categories', CategoryView, 'category')
