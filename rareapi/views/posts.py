@@ -54,6 +54,8 @@ class PostView(ViewSet):
         serializer.save()
         # post.categories.remove(*post.categories.all())
         # post.categories.add(*request.data['categories'])
+        post.tags.remove(*post.tags.all())
+        post.tags.add(*request.data['tags'])
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
