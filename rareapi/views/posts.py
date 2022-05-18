@@ -35,11 +35,14 @@ class PostView(ViewSet):
             posts = Post.objects.all()
         else:
             posts = Post.objects.all().filter(approved=1)
-            posts = posts.filter(publication_date__lt=datetime.now())
+            posts = posts.filter(publication_date__lte=datetime.now())
         posts = posts.order_by('-publication_date')
         category = request.query_params.get('label', None)
         if category is not None:
             posts = posts.filter(category=category)
+        user = request.query_params.get('user_id', None)
+        if user is not None:
+            posts = posts.filter(rare_user_id=user)
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
@@ -62,12 +65,12 @@ class PostView(ViewSet):
         # like this
 
         rare_user = RareUser.objects.get(user=request.auth.user)
-        category = Category.objects.get(pk=request.data['category'])
+        category = Category.objects.get(pk=request.data['category_id'])
         serializer = CreatePostSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(rare_user=rare_user, category=category)
-        # post = Post.objects.get(pk=serializer.data['id'])
-        # post.categories.add(*request.data['category'])
+        post = Post.objects.get(pk=serializer.data['id'])
+        post.tags.add(*request.data['tags'])
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -113,8 +116,6 @@ class CreatePostSerializer(serializers.ModelSerializer):
             'image_url',
             'content',
             'approved',
-            'category',
-            'rare_user',
             'tags'
         )
         depth = 2
