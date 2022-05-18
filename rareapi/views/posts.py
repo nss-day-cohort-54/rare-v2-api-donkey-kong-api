@@ -35,11 +35,14 @@ class PostView(ViewSet):
             posts = Post.objects.all()
         else:
             posts = Post.objects.all().filter(approved=1)
-            posts = posts.filter(publication_date__lt=datetime.now())
+            posts = posts.filter(publication_date__lte=datetime.now())
         posts = posts.order_by('-publication_date')
         category = request.query_params.get('label', None)
         if category is not None:
             posts = posts.filter(category=category)
+        user = request.query_params.get('user_id', None)
+        if user is not None:
+            posts = posts.filter(rare_user_id=user)
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
