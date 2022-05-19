@@ -12,5 +12,61 @@
       "approved": true,
       "tags": [1]
     }
+  },
+  {
+    "model": "rareapi.post",
+    "pk": 2,
+    "fields": {
+      "rare_user": 2,
+      "category": 1,
+      "title": "This is a title",
+      "publication_date": "2022-01-09",
+      "image_url": "https://picsum.photos/200",
+      "content": "This is the content section of the post.",
+      "approved": true,
+      "tags": [1]
+    }
+  },
+  {
+    "model": "rareapi.post",
+    "pk": 3,
+    "fields": {
+      "rare_user": 6,
+      "category": 1,
+      "title": "This is a title",
+      "publication_date": "2022-01-09",
+      "image_url": "https://picsum.photos/200",
+      "content": "This is the content section of the post.",
+      "approved": true,
+      "tags": [1]
+    }
+  },
+  {
+    "model": "rareapi.post",
+    "pk": 4,
+    "fields": {
+      "rare_user": 6,
+      "category": 1,
+      "title": "This is a title",
+      "publication_date": "2022-01-09",
+      "image_url": "https://picsum.photos/200",
+      "content": "This is the content section of the post.",
+      "approved": true,
+      "tags": [1]
+    }
+  },
+  {
+    "model": "rareapi.post",
+    "pk": 5,
+    "fields": {
+      "rare_user": 6,
+      "category": 1,
+      "title": "This is an unauthorized title",
+      "publication_date": "2022-01-09",
+      "image_url": "https://picsum.photos/200",
+      "content": "This is the content section of the post.",
+      "approved": false,
+      "tags": [1]
+    }
   }
 ]

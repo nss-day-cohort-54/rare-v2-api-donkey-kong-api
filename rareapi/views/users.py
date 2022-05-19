@@ -19,7 +19,7 @@ class UserView(ViewSet):
 
     def list(self, request):
         
-        rare_users = RareUser.objects.all()
+        rare_users = RareUser.objects.all().order_by('user')
         serializer = RareUserSerializer(rare_users, many=True)
         return Response(serializer.data)
 class UserSerializer(serializers.ModelSerializer):
