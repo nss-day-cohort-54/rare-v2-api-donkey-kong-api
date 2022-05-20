@@ -62,8 +62,7 @@ class RareUserSerializer(serializers.ModelSerializer):
             'bio',
             'profile_image_url',
             'created_on',
-            'active',
-            'subscribed'
+            'active'
         )
         depth = 2
 
