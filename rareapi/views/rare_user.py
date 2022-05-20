@@ -4,6 +4,7 @@ from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from rareapi.models.rareUser import RareUser
+from rest_framework.decorators import action
 
 
 class RareUserView(ViewSet):
@@ -19,9 +20,31 @@ class RareUserView(ViewSet):
 
     def list(self, request):
 
+        # follower = RareUser.objects.get(user=request.auth.user)
         rare_user = RareUser.objects.all()
+        # for rare_user in rare_users:
+        #     rare_user.subscribed = follower in rare_users.followers.all()
         serializer = RareUserSerializer(rare_user, many=True)
         return Response(serializer.data)
+    # @action(methods=['post'], detail=True)
+    # def subscribe(self, request, pk):
+    #     """Post request for a user to sign up for an event"""
+    
+    #     follower = RareUser.objects.get(user=request.auth.user)
+    #     rare_user = RareUser.objects.get(pk=pk)
+    #     rare_user.followers.add(follower)
+    #     return Response({'message': 'Subscribed'}, status=status.HTTP_201_CREATED)
+    
+    # @action(methods=['delete'], detail=True)
+    # def unsubscribe(self, request, pk):
+    #     """Post request for a user to sign up for an event"""
+    
+    #     follower = RareUser.objects.get(user=request.auth.user)
+    #     rare_user = RareUser.objects.get(pk=pk)
+    #     rare_user.followers.remove(follower)
+    #     return Response({'message': 'Unsubscribed'}, status=status.HTTP_204_NO_CONTENT)
+    
+
 
 
 class RareUserSerializer(serializers.ModelSerializer):
@@ -39,7 +62,8 @@ class RareUserSerializer(serializers.ModelSerializer):
             'bio',
             'profile_image_url',
             'created_on',
-            'active'
+            'active',
+            'subscribed'
         )
         depth = 2
 

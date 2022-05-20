@@ -23,10 +23,13 @@ from rareapi.views.categories import CategoryView
 from rareapi.views.comments import CommentView
 from rareapi.views.post_reactions import PostReactionView
 from rareapi.views.posts import PostView
+
+from rareapi.views.subscriptions import SubscriptionView
+
 from rareapi.views.reactions import ReactionView
+
 from rareapi.views.tags import TagView
 from rareapi.views.rare_user import RareUserView
-
 
 from rareapi.views.users import UserView
 
@@ -39,7 +42,11 @@ router.register(r'tags', TagView, 'tag')
 router.register(r'comments', CommentView, 'comment')
 router.register(r'categories', CategoryView, 'category')
 router.register(r'users', UserView, 'user')
+
+router.register(r'subscriptions', SubscriptionView, 'subscription')
+
 router.register(r'reactions', ReactionView, 'reaction')
+
 
 urlpatterns = [
     path('register', register_user),
