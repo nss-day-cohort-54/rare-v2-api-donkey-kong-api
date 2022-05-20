@@ -21,6 +21,7 @@ from rest_framework import routers
 from rareapi.views.auth import login_user, register_user
 from rareapi.views.categories import CategoryView
 from rareapi.views.comments import CommentView
+from rareapi.views.post_reactions import PostReactionView
 from rareapi.views.posts import PostView
 from rareapi.views.reactions import ReactionView
 from rareapi.views.tags import TagView
@@ -32,6 +33,7 @@ from rareapi.views.users import UserView
 router = routers.DefaultRouter(trailing_slash=False)
 
 router.register(r'posts', PostView, 'post')
+router.register(r'postReactions', PostReactionView, 'postReaction')
 router.register(r'rareUser', RareUserView, 'rareUser')
 router.register(r'tags', TagView, 'tag')
 router.register(r'comments', CommentView, 'comment')
